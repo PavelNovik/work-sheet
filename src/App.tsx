@@ -4,7 +4,10 @@ import './App.css';
 // import {NewComponent} from "./NewComponent";
 // import Button from "./components/Button";
 // import button from "./components/Button";
-import {NewComponent} from "./components/NewComponent";
+// import {NewComponent} from "./components/NewComponent";
+// import {FullInput} from "./components/Input/FullInput";
+import Input from "./components/Input/Input";
+import Button from "./components/Input/Button";
 
 export type FilterType = "All" | "Dollars" | "RUBLS"
 type MoneyType = {
@@ -13,6 +16,10 @@ type MoneyType = {
     number: string
 }
 export type MoneyData = Array<MoneyType>
+
+// export type MessageType = {
+//     message: string
+// }
 
 function App() {
 
@@ -58,23 +65,46 @@ function App() {
         {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
     ])
 
-    const [filter, setFilter] = useState<FilterType>("All")
+    const [message, setMessage] = useState([
+        {message: "message1"},
+        {message: "message2"},
+        {message: "message3"},
+    ])
 
-    let currentMoney: MoneyData = money
 
-    if (filter === "Dollars") {
-        currentMoney = money.filter((el) => el.banknots === "Dollars")
+    // const [filter, setFilter] = useState<FilterType>("All")
+    //
+    // let currentMoney: MoneyData = money
+    //
+    // if (filter === "Dollars") {
+    //     currentMoney = money.filter((el) => el.banknots === "Dollars")
+    // }
+    // if (filter === "RUBLS") {
+    //     currentMoney = money.filter((el) => el.banknots === "RUBLS")
+    // }
+    // const onClickHandler = (currency: FilterType) => {
+    //     setFilter(currency)
+    // }
+
+    const inputClickHandler = (val: string) => {
+        setMessage([{message: val}, ...message])
     }
-    if (filter === "RUBLS") {
-        currentMoney = money.filter((el) => el.banknots === "RUBLS")
-    }
-    const onClickHandler = (currency: FilterType) => {
-        setFilter(currency)
+    const [title, setTitle] = useState('')
+
+    const buttonClickHandler = () => {
+        inputClickHandler(title)
+        setTitle('')
     }
 
     return (
         <div className="App">
-            <NewComponent money={currentMoney} onClickHandler={onClickHandler}/>
+            {/*<NewComponent money={currentMoney} onClickHandler={onClickHandler}/>*/}
+            <Input title={title} setTitle={setTitle}/>
+            <Button name={'+'} callBack={buttonClickHandler}/>
+            {/*<FullInput inputClickHandler={inputClickHandler}/>*/}
+            {message.map((m, i) => {
+                return <div key={i}>{m.message}</div>
+            })}
             {/*<NewComponent money={currentMoney}/>*/}
             {/*<ul>*/}
             {/*    {currentMoney.map((objectFromMoneyArray, index) => {*/}
